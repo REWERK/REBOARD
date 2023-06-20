@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.Headborder > tr > th , .Headborder {
+    @apply border-2 border-solid border-black text-center
+}
+.Subborder > tr > td , .Subborder > tr > th {
+    @apply border-l-2 border-r-2 border-solid border-black text-center
+}
+.Cardinput >div > div > div > p {
+    @apply text-right text-5xl font-bold
+}
