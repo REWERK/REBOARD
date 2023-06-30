@@ -1,5 +1,16 @@
 <script>
+	import { invalidate } from '$app/navigation';
+	import { onMount } from 'svelte';
+
 	let Running = 'Type Something'
+	/** @type {import('./$types').PageData} */
+	export let data;
+	console.log (data)
+	onMount (()=>{
+		setTimeout (()=>{
+			window.location.reload()
+		},120000)
+	})
   </script>
 
 <div class="navbar sticky top-0 z-10 bg-[#212121]">
@@ -7,29 +18,7 @@
 		<a class="btn btn-ghost normal-case text-xl text-white">REBOARD</a>
 	</div>
 	<div class="flex-none gap-2">
-		<div class="form-control">
-			<input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-		</div>
-		<div class="dropdown dropdown-end">
-			<label tabindex="0" class="btn btn-ghost btn-circle avatar">
-				<div class="w-10 rounded-full">
-					<img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-				</div>
-			</label>
-			<ul
-				tabindex="0"
-				class="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-			>
-				<li>
-					<a class="justify-between">
-						Profile
-						<span class="badge">New</span>
-					</a>
-				</li>
-				<li><a>Settings</a></li>
-				<li><a>Logout</a></li>
-			</ul>
-		</div>
+		<a class="btn btn-ghost normal-case text-xl text-yellow-400">REWERK</a>
 	</div>
 </div>
 <div class="px-12 py-12 bg-slate-100 min-h-screen space-y-10 Cardinput">
@@ -37,71 +26,54 @@
 	<div class="grid grid-cols-3 gap-10 max-w-7xl">
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<div class="card-body">
-				<h2 class="card-title text-warning">OUT</h2>
-				<p>20</p>
+				<h2 class="card-title text-warning">REQUEST</h2>
+				<p>{data.total}</p>
 				<div class="card-actions justify-end" />
 			</div>
 		</div>
 
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<div class="card-body">
-				<h2 class="card-title text-success">COMPLETE</h2>
-				<p>10</p>
+				<h2 class="card-title text-success">DONE</h2>
+				<p>{data.total2}</p>
 				<div class="card-actions justify-end" />
 			</div>
 		</div>
 
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<div class="card-body">
-				<h2 class="card-title text-error">NOT RETURN</h2>
-				<p>10</p>
+				<h2 class="card-title text-error">PREPARING</h2>
+				<p>{data.total-data.total2}</p>
 				<div class="card-actions justify-end" />
 			</div>
 		</div>
 	</div>
-	<div class="text-3xl text-gray-800">Dashboard Something</div>
+	<div class="text-3xl text-gray-800">Dashboard QR</div>
 	<div class="grid grid-cols-3 gap-10 max-w-7xl">
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<div class="card-body">
-				<h2 class="card-title text-warning">OUT</h2>
-				<p>10</p>
+				<h2 class="card-title text-warning">WITHDRAW</h2>
+				<p>{data.total4}</p>
 				<div class="card-actions justify-end" />
 			</div>
 		</div>
 
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<div class="card-body">
-				<h2 class="card-title text-success">COMPLETE</h2>
-				<p>10</p>
+				<h2 class="card-title text-success">RETURN</h2>
+				<p>{data.total5}</p>
 				<div class="card-actions justify-end" />
 			</div>
 		</div>
 
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<div class="card-body">
-				<h2 class="card-title text-error">NOT RETURN</h2>
-				<p>10</p>
+				<h2 class="card-title text-error">PENDING RETURN</h2>
+				<p>{data.total5}</p>
 				<div class="card-actions justify-end" />
 			</div>
 		</div>
-	</div>
-	<div class="text-3xl text-gray-800">Dashboard Consumable</div>
-	<div class="grid grid-cols-3 gap-10 max-w-7xl">
-		<div class="card w-96 bg-base-100 shadow-xl">
-			<div class="card-body">
-				<h2 class="card-title text-warning">OUT</h2>
-				<p>10</p>
-				<div class="card-actions justify-end" />
-			</div>
-		</div>
-
-		<div class="card w-96 bg-base-100 shadow-xl">
-			<div class="card-body">
-				<h2 class="card-title text-success">COMPLETE</h2>
-				<p>10</p>
-				<div class="card-actions justify-end" />
-			</div>
-		</div>
+	
 	</div>
 	<div class="text-3xl text-gray-800">Table Overview</div>
 	<div class="card w-full bg-base-100 shadow-xl">
@@ -111,14 +83,14 @@
 					<!-- head -->
 					<thead class="Headborder">
 						<tr class="bg-[#6EBE49] text-white">
-							<th>Me</th>
-							<th>You</th>
-							<th>My <br /> Self</th>
-							<th>Fox</th>
-							<th>Engineering</th>
-							<th>Yae <br /> Miko Team</th>
-							<th>Shutdown</th>
-							<th>Kill Streak</th>
+							<th>Zone</th>
+							<th>Total</th>
+							<th>Active<br /> (ALL-Shutdown)</th>
+							<th>DOWN</th>
+							<th>Fixing</th>
+							<th>Broke<br /> (Team Reparing)</th>
+							<th>Shutdown Repair</th>
+							<th>WAITING</th>
 						</tr>
 					</thead>
 					<tbody class="Subborder">
@@ -146,7 +118,7 @@
 						</tr>
 						<!-- row 3 -->
 						<tr>
-							<th>B1</th>
+							<th>A3</th>
 							<td>-</td>
 							<td>-</td>
 							<td>-</td>
@@ -157,7 +129,7 @@
 						</tr>
 						<!-- row 4 -->
 						<tr>
-							<th>B2</th>
+							<th>A4</th>
 							<td>-</td>
 							<td>-</td>
 							<td>-</td>
@@ -168,7 +140,7 @@
 						</tr>
 						<!-- row 5 -->
 						<tr>
-							<th>C1</th>
+							<th>B1</th>
 							<td>-</td>
 							<td>-</td>
 							<td>-</td>
@@ -179,7 +151,7 @@
 						</tr>
 						<!-- row 6 -->
 						<tr>
-							<th>C2</th>
+							<th>B2</th>
 							<td>-</td>
 							<td>-</td>
 							<td>-</td>
@@ -190,7 +162,7 @@
 						</tr>
 						<!-- row 7 -->
 						<tr>
-							<th>C3</th>
+							<th>B3</th>
 							<td>-</td>
 							<td>-</td>
 							<td>-</td>
