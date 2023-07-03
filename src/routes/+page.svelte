@@ -69,7 +69,7 @@
 		<div class="card w-96 bg-base-100 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title text-error">PENDING RETURN</h2>
-				<p>{data.total5}</p>
+				<p>{data.total6}</p>
 				<div class="card-actions justify-end" />
 			</div>
 		</div>

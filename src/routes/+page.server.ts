@@ -54,8 +54,42 @@ const query = {
 	   AND <columnname> < TRUNC(SYSDATE) + INTERVAL '1' DAY)
 		   OR (<columnname> >= TRUNC(SYSDATE) 
 		   AND <columnname> < TRUNC(SYSDATE) + INTERVAL '6' HOUR);`
+	},
+
+	qrreturn: {
+		day: `SELECT COUNT(*)
+		FROM <tablename>
+		WHERE <columnname> >= TRUNC(SYSDATE) + INTERVAL '6' HOUR
+		  AND <columnname> < TRUNC(SYSDATE) + INTERVAL '18' HOUR
+	    	AND <columnname> != 0`,
+
+		night: `SELECT COUNT(*)
+		FROM <tablename>
+		WHERE (<columnname> >= TRUNC(SYSDATE) + INTERVAL '6' HOUR
+	   AND <columnname> < TRUNC(SYSDATE) + INTERVAL '1' DAY)
+		   OR (<columnname> >= TRUNC(SYSDATE) 
+		   AND <columnname> < TRUNC(SYSDATE) + INTERVAL '6' HOUR)
+		   AND <columnname> != 0`
+	},
+
+	qrpending: {
+		day: `SELECT COUNT(*)
+		FROM <tablename>
+		WHERE <columnname> >= TRUNC(SYSDATE) + INTERVAL '6' HOUR
+		  AND <columnname> < TRUNC(SYSDATE) + INTERVAL '18' HOUR
+	    	AND <columnname> = 0`,
+
+		night: `SELECT COUNT(*)
+		FROM <tablename>
+		WHERE (<columnname> >= TRUNC(SYSDATE) + INTERVAL '6' HOUR
+	   AND <columnname> < TRUNC(SYSDATE) + INTERVAL '1' DAY)
+		   OR (<columnname> >= TRUNC(SYSDATE) 
+		   AND <columnname> < TRUNC(SYSDATE) + INTERVAL '6' HOUR)
+		   AND <columnname> = 0`
 	}
+	
 };
+
 
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
@@ -80,10 +114,20 @@ export async function load({ params }) {
 		hours >= 6 && hours < 18 ? query.qrwithdraw.day : query.qrwithdraw.night
 	)) as any;
 
+	const result5 = (await connection.execute(
+		hours >= 6 && hours < 18 ? query.qrreturn.day : query.qrreturn.night
+	)) as any;
+
+	const result6 = (await connection.execute(
+		hours >= 6 && hours < 18 ? query.qrpending.day : query.qrpending.night
+	)) as any
+
 	console.log(result.rows);
 	return {
 		total: result?.rows[0]['COUNT(*)'] ?? 0,
 		total2: result2?.rows[0]['COUNT(*)'] ?? 0,
-		total4: result4?.rows[0]['COUNT(*)'] ?? 0
+		total4: result4?.rows[0]['COUNT(*)'] ?? 0,
+		total5: result5?.rows[0]['COUNT(*)'] ?? 0,
+		total6: result6?.rows[0]['COUNT(*)'] ?? 0
 	};
 }
